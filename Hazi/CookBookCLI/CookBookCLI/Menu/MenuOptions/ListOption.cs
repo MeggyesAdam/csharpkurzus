@@ -1,4 +1,5 @@
-﻿using CookBookCLI.Storage;
+﻿using CookBookCLI.Services;
+using CookBookCLI.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,9 +16,13 @@ namespace CookBookCLI.Menu.MenuOptions
             _storage = storage;
         }
 
-        public Task Execute()
+        public async Task Execute()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.WriteLine("=== Receptek ===\n");
+            var recipes = await _storage.LoadRecipes();
+            
+            WriteToConsoleService.WriteRecipesToConsole(recipes);
         }
     }
 }

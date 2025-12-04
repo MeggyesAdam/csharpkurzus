@@ -130,5 +130,48 @@ namespace CookBookCLI.Services
                 Unit = ingredientDTO.Unit!
             };
         }
+
+        public static RecipeDTO GetSearchDTOFromUserInput()
+        {
+            var recipeDTO = new RecipeDTO();
+
+            Console.WriteLine("Keresési feltételek megadása (üres mező = nincs megkötés):");
+            Console.Write("Add meg a recept címét: ");
+            var name = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(name)) 
+            {
+                recipeDTO.Name = name;
+            }
+
+            Console.Write("Add meg a recept leírását: ");
+            var description = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                recipeDTO.Description = description;
+            }
+
+            Console.Write("Add meg, hogy mennyi idő elkészíteni a receptet (perc): ");
+            while (true)
+            {
+                try
+                {
+                    var input = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(input))
+                    {
+                        break;
+                    }
+                    int result = int.Parse(input);
+                    recipeDTO.PreparationTimeInMinutes = result;
+                    break;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine($"Kérlek számot adj meg!");
+                    continue;
+                }
+            }
+
+            return recipeDTO;
+        }
     }
 }

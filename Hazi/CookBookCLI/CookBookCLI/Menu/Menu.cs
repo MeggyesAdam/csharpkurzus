@@ -46,13 +46,13 @@ namespace CookBookCLI.Menu
                             try
                             {
                                 _options[optionIndex].Execute();
-                            } catch (Exception ex)
+                            } 
+                            catch (Exception ex)
                             {
                                 // TODO
                                 Console.WriteLine(ex);
                             }
                             Console.WriteLine();
-                            Console.WriteLine("Nyomj Entert a folytatáshoz...");
                             Console.ReadLine();
                             continue;
                         }
