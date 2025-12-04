@@ -11,11 +11,9 @@ namespace CookBookCLI.Services
     {
         public static void WriteRecipesToConsole(List<Recipe> recipes)
         {
-            Console.Clear();
-
             if (recipes.Count == 0)
             {
-                Console.WriteLine("Nincsenek elmentett receptek.");
+                Console.WriteLine("Nincsenek megjeleníthető recept.");
                 return;
             }
             Console.WriteLine("---------------------------------------\n");

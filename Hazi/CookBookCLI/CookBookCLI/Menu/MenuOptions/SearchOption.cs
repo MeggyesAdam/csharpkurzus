@@ -17,12 +17,13 @@ namespace CookBookCLI.Menu.MenuOptions
         public async Task Execute()
         {
             Console.Clear();
+            Console.WriteLine("=== Recept keresése ===");
 
             var searchDTO = Services.UserInputService.GetSearchDTOFromUserInput();
             var recipes = await _storage.LoadRecipes();
             if (recipes.Count == 0)
             {
-                Console.WriteLine("Nincsenek elmentett receptek.");
+                Console.WriteLine("Nincsen ilyen recept.");
                 return;
             }
 
