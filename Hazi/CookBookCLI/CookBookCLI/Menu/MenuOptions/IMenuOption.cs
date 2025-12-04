@@ -7,6 +7,6 @@ namespace CookBookCLI.Menu.MenuOptions
     internal interface IMenuOption
     {
         string Title { get; }
-        void Execute();
+        Task Execute();
     }
 }

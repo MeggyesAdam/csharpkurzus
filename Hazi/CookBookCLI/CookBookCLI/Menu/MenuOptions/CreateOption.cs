@@ -1,23 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using CookBookCLI.Storage;
 
 namespace CookBookCLI.Menu.MenuOptions
 {
     internal class CreateOption : IMenuOption
     {
+        private readonly IRecipeStorage _storage;
         public string Title => "Új recept hozzáadása";
 
-        public void Execute()
+        public CreateOption(IRecipeStorage storage)
+        {
+            _storage = storage;
+        }
+
+        public async Task Execute()
         {
             Console.Clear();
             Console.WriteLine("=== Új recept hozzáadása ===");
-            Console.Write("Add meg a recept címét: ");
-            var title = Console.ReadLine();
-            Console.Write("Add meg a recept leírását: ");
-            var description = Console.ReadLine();
-            Console.Write("Add meg az elkészítési időt (perc): ");
-            var preparationTimeInMinutes = 
+            var recipe = Services.UserInputService.GetRecipeFromUser();
+            var storedRecipes = await _storage.LoadRecipes();
+            storedRecipes.Add(recipe);
+            await _storage.SaveRecipes(storedRecipes);
+            Console.WriteLine("\nRecept sikeresen hozzáadva!");
         }
     }
 }

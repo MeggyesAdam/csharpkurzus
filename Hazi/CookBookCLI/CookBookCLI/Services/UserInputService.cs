@@ -7,7 +7,7 @@ namespace CookBookCLI.Services
 {
     internal static class UserInputService
     {
-        public static Ingredient GetRecipeFromUser()
+        public static Recipe GetRecipeFromUser()
         {
             var recipeDTO = new RecipeDTO();
             while (true)
@@ -17,12 +17,12 @@ namespace CookBookCLI.Services
                     Console.Write("Add meg a recept címét: ");
                     recipeDTO.Name = Console.ReadLine();
                 }
-                if (string.IsNullOrWhiteSpace(recipeDTO.Description))
+                else if (string.IsNullOrWhiteSpace(recipeDTO.Description))
                 {
                     Console.Write("Add meg a recept leírását: ");
-                    recipeDTO.Name = Console.ReadLine();
+                    recipeDTO.Description = Console.ReadLine();
                 }
-                if (recipeDTO.PreparationTimeInMinutes is null)
+                else if (recipeDTO.PreparationTimeInMinutes is null)
                 {
                     Console.Write("Add meg, hogy mennyi idő elkészíteni a receptet (perc): ");
                     try
@@ -30,13 +30,105 @@ namespace CookBookCLI.Services
                         int result = int.Parse(Console.ReadLine()!);
                         recipeDTO.PreparationTimeInMinutes = result;
                     }
-                    catch (FormatException ex)
+                    catch (FormatException)
                     {
-                        Console.WriteLine($"Kérlek számot adj meg! {ex.Message}");
+                        Console.WriteLine($"Kérlek számot adj meg!");
                         continue;
                     }
                 }
+                else if (recipeDTO.Ingredients is null || recipeDTO.Ingredients.Count == 0)
+                {
+                    recipeDTO.Ingredients = GetIngredientListFromUser();
+                }
+                else 
+                {
+                    break;
+                }
             }
+
+            return new Recipe
+            {
+                Name = recipeDTO.Name!,
+                Description = recipeDTO.Description!,
+                PreparationTimeInMinutes = recipeDTO.PreparationTimeInMinutes!.Value,
+                Ingredients = recipeDTO.Ingredients!
+            };
+        }
+
+        public static List<Ingredient> GetIngredientListFromUser()
+        {
+            List<Ingredient> ingredients = new();
+            while (true) 
+            {
+                Console.WriteLine();
+                Console.Write("Szeretnél újabb hozzávalót hozzáadni? (I/n): ");
+                var input = Console.ReadLine();
+                switch (input)
+                {
+                    case "I":
+                    case "i":
+                    case "":
+                        var ingredient = GetIngredientFromUser();
+                        ingredients.Add(ingredient);
+                        break;
+                    case "N":
+                    case "n":
+                        if (ingredients.Count == 0)
+                        {
+                            Console.WriteLine("Legalább egy hozzávalót meg kell adnod!");
+                            continue;
+                        }
+                        else
+                        {
+                            return ingredients;
+                        }
+                    default:
+                        Console.WriteLine("Érvénytelen választás! Kérlek, válaszolj 'I' vagy 'n' betűvel.");
+                        break;
+                }
+            }
+        }
+
+        public static Ingredient GetIngredientFromUser()
+        {
+            IngredientDTO ingredientDTO = new();
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(ingredientDTO.Name))
+                {
+                    Console.Write("Add meg a hozzávaló nevét: ");
+                    ingredientDTO.Name = Console.ReadLine();
+                }
+                else if (ingredientDTO.Quantity is null)
+                {
+                    Console.Write("Add meg a hozzávaló mennyiségét: ");
+                    try
+                    {
+                        double result = double.Parse(Console.ReadLine()!);
+                        ingredientDTO.Quantity = result;
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine($"Kérlek számot adj meg!");
+                        continue;
+                    }
+                }
+                else if (string.IsNullOrWhiteSpace(ingredientDTO.Unit))
+                {
+                    Console.Write("Add meg a hozzávaló mértékegységét: ");
+                    ingredientDTO.Unit = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return new Ingredient
+            {
+                Name = ingredientDTO.Name!,
+                Quantity = ingredientDTO.Quantity!.Value,
+                Unit = ingredientDTO.Unit!
+            };
         }
     }
 }

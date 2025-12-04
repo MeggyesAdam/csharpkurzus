@@ -8,6 +8,7 @@ var storage = new RecipeStorage("recipes.json");
 var options = new List<IMenuOption>
 {
     new ListOption(storage),
+    new CreateOption(storage),
 };
 
 var menu = new Menu(options);

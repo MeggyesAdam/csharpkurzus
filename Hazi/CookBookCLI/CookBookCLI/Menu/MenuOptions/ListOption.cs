@@ -15,7 +15,7 @@ namespace CookBookCLI.Menu.MenuOptions
             _storage = storage;
         }
 
-        public void Execute()
+        public Task Execute()
         {
             throw new NotImplementedException();
         }
