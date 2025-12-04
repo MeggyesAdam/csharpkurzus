@@ -46,11 +46,10 @@ namespace CookBookCLI.Menu
                             try
                             {
                                 _options[optionIndex].Execute();
-                            } 
+                            }
                             catch (Exception ex)
                             {
-                                // TODO
-                                Console.WriteLine(ex);
+                                Console.WriteLine($"Hiba történt a funkció futtatása során: {ex.Message}");
                             }
                             Console.WriteLine();
                             Console.ReadLine();
@@ -65,7 +64,7 @@ namespace CookBookCLI.Menu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"A következő hiba történt: {ex.Message}");
+                Console.WriteLine($"Hiba történt a program futása során: {ex.Message}");
             }
         }
     }
