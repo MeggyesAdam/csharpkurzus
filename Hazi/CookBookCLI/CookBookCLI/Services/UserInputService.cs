@@ -173,5 +173,37 @@ namespace CookBookCLI.Services
 
             return recipeDTO;
         }
+
+        public static int GetRecipeIndexFromUser(int recipesCount)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.Write($"Adja meg a szerkeszteni kívánt recept számát (1 - {recipesCount}): ");
+                    string? input = Console.ReadLine();
+                    if (string.IsNullOrEmpty(input))
+                    {
+                        Console.WriteLine("Kérem adjon meg egy számot.");
+                        continue;
+                    }
+
+                    int recipeIndex = int.Parse(input) - 1;
+
+                    if (!(recipeIndex >= 0 && recipeIndex < recipesCount))
+                    {
+                        Console.WriteLine("Érvénytelen szám. Próbálja újra.");
+                        continue;
+                    }
+
+                    return recipeIndex;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Kérem számot adjon meg.");
+                    continue;
+                }
+            }
+        }
     }
 }

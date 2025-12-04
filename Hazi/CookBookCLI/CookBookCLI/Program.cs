@@ -11,6 +11,7 @@ var options = new List<IMenuOption>
     new ListOption(storage),
     new CreateOption(storage),
     new SearchOption(storage),
+    new EditOption(storage),
 };
 
 var menu = new Menu(options);

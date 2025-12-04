@@ -20,6 +20,10 @@ namespace CookBookCLI.Storage
             {
                 await JsonStorageService.Serialize(_filePath, recipes);
             }
+            catch (IOException ex) 
+            { 
+                Console.WriteLine($"Hiba történt a fájl elérése közben. {ex.Message}");
+            }
             catch (Exception ex)
             {
                 Console.WriteLine($"Nem sikerült menteni a fájlt. {ex.Message}");
@@ -36,6 +40,11 @@ namespace CookBookCLI.Storage
             catch (JsonException ex)
             {
                 Console.WriteLine($"A mentett fájl korrupt. {ex.Message}");
+                return new List<Recipe>();
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Hiba történt a fájl elérése közben. {ex.Message}");
                 return new List<Recipe>();
             }
             catch (Exception ex)

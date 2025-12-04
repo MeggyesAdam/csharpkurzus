@@ -33,12 +33,15 @@ namespace CookBookCLI.Menu.MenuOptions
 
         private List<Recipe> SearchRecipes(List<Recipe> recipes, RecipeDTO searchDTO)
         {
-            var foundRecipes = recipes.Where(recipe =>
-            {
-                return (string.IsNullOrWhiteSpace(searchDTO.Name) || recipe.Name.Contains(searchDTO.Name!, StringComparison.InvariantCultureIgnoreCase)) &&
-                (string.IsNullOrWhiteSpace(searchDTO.Description) || recipe.Description.Contains(searchDTO.Description!, StringComparison.InvariantCultureIgnoreCase)) &&
-                (!searchDTO.PreparationTimeInMinutes.HasValue || (recipe.PreparationTimeInMinutes - 10 <= searchDTO.PreparationTimeInMinutes.Value && recipe.PreparationTimeInMinutes + 10 >= searchDTO.PreparationTimeInMinutes.Value));
-            }).ToList();
+            var foundRecipes = recipes
+                .Where(recipe =>
+                    {
+                        return (string.IsNullOrWhiteSpace(searchDTO.Name) || recipe.Name.Contains(searchDTO.Name!, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (string.IsNullOrWhiteSpace(searchDTO.Description) || recipe.Description.Contains(searchDTO.Description!, StringComparison.InvariantCultureIgnoreCase)) &&
+                        (!searchDTO.PreparationTimeInMinutes.HasValue || (recipe.PreparationTimeInMinutes - 10 <= searchDTO.PreparationTimeInMinutes.Value && recipe.PreparationTimeInMinutes + 10 >= searchDTO.PreparationTimeInMinutes.Value));
+                    })
+                .OrderBy(recipe => recipe.Name)
+                .ToList();
 
             return foundRecipes;
         }
