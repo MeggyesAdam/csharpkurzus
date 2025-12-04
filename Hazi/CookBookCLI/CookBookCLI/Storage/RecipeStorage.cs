@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace CookBookCLI.Storage
 {
-    internal class RecipeStorage
+    internal class RecipeStorage : IRecipeStorage
     {
         private readonly string _filePath;
         public RecipeStorage(string filePath)
@@ -19,7 +19,8 @@ namespace CookBookCLI.Storage
             try
             {
                 await JsonStorageService.Serialize(_filePath, recipes);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine($"Nem sikerült menteni a fájlt. {ex.Message}");
             }
@@ -31,7 +32,8 @@ namespace CookBookCLI.Storage
             {
                 List<Recipe>? recipes = await JsonStorageService.Deserialize<List<Recipe>>(_filePath);
                 return recipes is not null ? recipes : new List<Recipe>();
-            } catch (JsonException ex)
+            }
+            catch (JsonException ex)
             {
                 Console.WriteLine($"A mentett fájl korrupt. {ex.Message}");
                 return new List<Recipe>();
