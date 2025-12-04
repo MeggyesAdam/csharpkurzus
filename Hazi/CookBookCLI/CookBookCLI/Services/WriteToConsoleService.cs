@@ -9,6 +9,10 @@ namespace CookBookCLI.Services
 {
     internal static class WriteToConsoleService
     {
+        /// <summary>
+        /// Writed the list of recipes to the console.
+        /// </summary>
+        /// <param name="recipes"></param>
         public static void WriteRecipesToConsole(List<Recipe> recipes)
         {
             if (recipes.Count == 0)

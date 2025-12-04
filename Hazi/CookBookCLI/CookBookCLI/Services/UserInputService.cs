@@ -7,6 +7,10 @@ namespace CookBookCLI.Services
 {
     internal static class UserInputService
     {
+
+        /// <summary>
+        /// Uses the console to get recipe data from the user. Returns a Recipe object using the data.
+        /// </summary>
         public static Recipe GetRecipeFromUser()
         {
             var recipeDTO = new RecipeDTO();
@@ -55,6 +59,9 @@ namespace CookBookCLI.Services
             };
         }
 
+        /// <summary>
+        /// Uses GetIngredientFromUser in a loop to get a list of ingredients from the user.
+        /// </summary>
         public static List<Ingredient> GetIngredientListFromUser()
         {
             List<Ingredient> ingredients = new();
@@ -89,6 +96,9 @@ namespace CookBookCLI.Services
             }
         }
 
+        /// <summary>
+        /// Uses the console to get ingredient data from the user. Returns an Ingredient object using the data.
+        /// </summary>
         public static Ingredient GetIngredientFromUser()
         {
             IngredientDTO ingredientDTO = new();
@@ -131,6 +141,9 @@ namespace CookBookCLI.Services
             };
         }
 
+        /// <summary>
+        /// Returns a RecipeDTO object based on user input for searching recipes.
+        /// </summary>
         public static RecipeDTO GetSearchDTOFromUserInput()
         {
             var recipeDTO = new RecipeDTO();
@@ -174,6 +187,10 @@ namespace CookBookCLI.Services
             return recipeDTO;
         }
 
+        /// <summary>
+        /// Gets the wanted index from the user, using the console.
+        /// </summary>
+        /// <param name="recipesCount"></param>
         public static int GetRecipeIndexFromUser(int recipesCount)
         {
             while (true)
